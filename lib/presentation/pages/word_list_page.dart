@@ -1,3 +1,8 @@
+import 'package:english_dictionary/core/service/http_service.dart';
+import 'package:english_dictionary/domain/entity/words_entity.dart';
+import 'package:english_dictionary/domain/use_case/get_word_use_case_impl.dart';
+import 'package:english_dictionary/infra/datasources/words_datasource_impl.dart';
+import 'package:english_dictionary/infra/repositories/words_repository_impl.dart';
 import 'package:english_dictionary/presentation/controllers/word_list_page_controller.dart';
 import 'package:english_dictionary/src/words_dictionary.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +11,19 @@ class WordListPage extends StatefulWidget {
   const WordListPage({super.key});
 
   @override
-  State<WordListPage> createState() =>
-      _WordListPageState(WordListPageController(WordsDictionary()));
+  State<WordListPage> createState() => _WordListPageState(
+        WordListPageController(
+          wordsDictionary: WordsDictionary(),
+          wordDescription: Word(),
+          getWordUseCase: GetWordUseCaseImpl(
+            wordsRepository: WordsRepositoryImpl(
+              WordsDataSourceImpl(
+                httpService: HttpService(),
+              ),
+            ),
+          ),
+        ),
+      );
 }
 
 class _WordListPageState extends State<WordListPage> {
@@ -32,6 +48,7 @@ class _WordListPageState extends State<WordListPage> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
+              onTap: () {},
               title: Text(
                 wordListPageController.allWords![index],
                 textAlign: TextAlign.center,
