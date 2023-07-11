@@ -10,7 +10,9 @@ class WordsDataSourceImpl implements WordsDatasource {
 
   @override
   Future<WordsModel> getWord(String word) async {
-    return httpService.call(
+    return await httpService.call(
+      fromJson: WordsModel.fromJson,
+      headers: EnglishDictionaryConstants().headers,
       url: '${EnglishDictionaryConstants().wordsApiRequestUrl}$word',
       type: RestType.get,
     );

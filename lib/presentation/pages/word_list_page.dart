@@ -4,6 +4,7 @@ import 'package:english_dictionary/domain/use_case/get_word_use_case_impl.dart';
 import 'package:english_dictionary/infra/datasources/words_datasource_impl.dart';
 import 'package:english_dictionary/infra/repositories/words_repository_impl.dart';
 import 'package:english_dictionary/presentation/controllers/word_list_page_controller.dart';
+import 'package:english_dictionary/presentation/pages/word_detail_page.dart';
 import 'package:english_dictionary/src/words_dictionary.dart';
 import 'package:flutter/material.dart';
 
@@ -39,24 +40,30 @@ class _WordListPageState extends State<WordListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemCount: wordListPageController.allWords?.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              onTap: () {},
-              title: Text(
-                wordListPageController.allWords![index],
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+    return Scaffold(
+      appBar: AppBar(title: const Text('Word List'),backgroundColor: Colors.black),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        child: GridView.builder(
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          itemCount: wordListPageController.allWords?.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                onTap: ()async {
+                 // wordListPageController.makeRequest();
+                await wordListPageController.call(wordListPageController.allWords![index], context);
+                  },
+                title: Text(
+                  wordListPageController.allWords![index],
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

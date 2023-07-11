@@ -1,16 +1,21 @@
 class Word {
-  String? word;
-  List<Results>? results;
-  Syllables? syllables;
-  Pronunciation? pronunciation;
-  double? frequency;
+ final String? word;
+ final List<Results>? results;
+ final Syllables? syllables;
+ final dynamic pronunciation;
+ final double? frequency;
+final bool? success;
+ final String? message;
 
-  Word(
-      {this.word,
-      this.results,
-      this.syllables,
-      this.pronunciation,
-      this.frequency});
+  Word({
+    this.word,
+    this.results,
+    this.syllables,
+    this.pronunciation,
+    this.frequency,
+    this.success,
+    this.message,
+  });
 }
 
 class Results {
@@ -18,30 +23,32 @@ class Results {
   String? partOfSpeech;
   List<String>? synonyms;
   List<String>? typeOf;
-  List<String>? memberOf;
   List<String>? hasTypes;
-  List<String>? partOf;
+  List<String>? also;
+  List<String>? derivation;
+  List<String>? examples;
 
   Results(
       {this.definition,
       this.partOfSpeech,
       this.synonyms,
       this.typeOf,
-      this.memberOf,
       this.hasTypes,
-      this.partOf});
+      this.also,
+      this.derivation,
+      this.examples});
 
 }
 
 class Syllables {
-  int? count;
-  List<String>? list;
+ final int? count;
+ final List<String>? list;
 
   Syllables({this.count, this.list});
 }
 
 class Pronunciation {
-  String? all;
+ final String? all;
 
   Pronunciation({this.all});
 }

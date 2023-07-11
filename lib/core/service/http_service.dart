@@ -7,7 +7,7 @@ class HttpService {
     RestType? type,
     dynamic body,
     Map<String, String>? headers,
-    T Function(dynamic)? fromJson,
+    T Function(String)? fromJson,
   }) async {
     http.Response response;
     final localHeader = headers ?? {'Content-Type': 'application/json'};
@@ -35,24 +35,23 @@ class HttpService {
 
   T _handleResponse<T>(
     http.Response response, {
-    T Function(dynamic)? fromJson,
+    T Function(String)? fromJson,
   }) {
     final statusCode = [202, 400, 500].contains(response.statusCode);
-    if (fromJson != null && statusCode) {
+    if (fromJson != null && statusCode == false) {
       try {
-        return fromJson(json.decode(response.body));
+        return fromJson(response.body);
       } catch (e) {
         throw Exception('Failed to parse JSON response: $e');
       }
-    } else if (statusCode) {
+    } else if (statusCode == false) {
       try {
         return response.body as T;
       } catch (e) {
         throw Exception('Failed to cast response to type $T: $e');
       }
     } else {
-      throw Exception(
-          'Failed to load data from API. Status code: ${response.statusCode}');
+          return fromJson!(response.body);
     }
   }
 }
