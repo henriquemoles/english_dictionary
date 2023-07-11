@@ -7,6 +7,7 @@ import 'package:english_dictionary/presentation/controllers/word_list_page_contr
 import 'package:english_dictionary/presentation/pages/word_detail_page.dart';
 import 'package:english_dictionary/src/words_dictionary.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WordListPage extends StatefulWidget {
   const WordListPage({super.key});
@@ -35,7 +36,9 @@ class _WordListPageState extends State<WordListPage> {
   @override
   void initState() {
     wordListPageController.convertJsonToList();
-    super.initState();
+    wordListPageController.getData();
+    super.initState(
+    );
   }
 
   @override
