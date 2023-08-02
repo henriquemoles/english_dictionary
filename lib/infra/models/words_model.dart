@@ -19,8 +19,6 @@ class WordsModel extends Word {
       this.success,
       this.message});
 
-
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'word': word,
@@ -35,21 +33,34 @@ class WordsModel extends Word {
 
   factory WordsModel.fromMap(Map<String, dynamic> map) {
     return WordsModel(
-     word: map['word'] != null ? map['word'] as String : null,
-     results: map['results'] != null ? List<ResultsModel>.from((map['results'] as List).map<ResultsModel?>((x) => ResultsModel.fromMap(x as Map<String,dynamic>),),) : null,
-     syllables: map['syllables'] != null ? SyllablesModel.fromMap(map['syllables'] as Map<String,dynamic>) : null,
-     pronunciation:map['pronunciation'] != null && map.toString().contains('all') ? map['pronunciation']['all'] as String : map['pronunciation'] != null ? map['pronunciation'] as String : null,
-     frequency: map['frequency'] != null ? map['frequency'] as double : null,
-     success: map['success'] != null ? map['success'] as bool : null,
-     message: map['message'] != null ? map['message'] as String : null,
-
-
+      word: map['word'] != null ? map['word'] as String : null,
+      results: map['results'] != null
+          ? List<ResultsModel>.from(
+              (map['results'] as List).map<ResultsModel?>(
+                (x) => ResultsModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
+      syllables: map['syllables'] != null
+          ? SyllablesModel.fromMap(map['syllables'] as Map<String, dynamic>)
+          : null,
+      pronunciation: map['pronunciation'] != null &&
+              map.toString().contains('all') &&
+              map['pronunciation'] != {}
+          ? map['pronunciation']['all'] as String
+          : map['pronunciation'] != null
+              ? map['pronunciation'] as String
+              : null,
+      frequency: map['frequency'] != null ? map['frequency'] as double : null,
+      success: map['success'] != null ? map['success'] as bool : null,
+      message: map['message'] != null ? map['message'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory WordsModel.fromJson(String source) => WordsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory WordsModel.fromJson(String source) =>
+      WordsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class ResultsModel extends Results {
@@ -87,20 +98,35 @@ class ResultsModel extends Results {
 
   factory ResultsModel.fromMap(Map<String, dynamic> map) {
     return ResultsModel(
-     definition: map['definition'] != null ? map['definition'] as String : null,
-     partOfSpeech: map['partOfSpeech'] != null ? map['partOfSpeech'] as String : null,
-     synonyms: map['synonyms'] != null ? List<String>.from(map['synonyms'] as List<dynamic>) : null,
-     typeOf: map['typeOf'] != null ? List<String>.from(map['typeOf'] as List<dynamic>) : null,
-     hasTypes: map['hasTypes'] != null ? List<String>.from(map['hasTypes'] as List<dynamic>) : null,
-     also: map['also'] != null ? List<String>.from(map['also'] as List<dynamic>): null,
-     derivation: map['derivation'] != null ? List<String>.from(map['derivation'] as List<dynamic>) : null,
-     examples: map['examples'] != null ? List<String>.from(map['examples'] as List<dynamic>) : null,
+      definition:
+          map['definition'] != null ? map['definition'] as String : null,
+      partOfSpeech:
+          map['partOfSpeech'] != null ? map['partOfSpeech'] as String : null,
+      synonyms: map['synonyms'] != null
+          ? List<String>.from(map['synonyms'] as List<dynamic>)
+          : null,
+      typeOf: map['typeOf'] != null
+          ? List<String>.from(map['typeOf'] as List<dynamic>)
+          : null,
+      hasTypes: map['hasTypes'] != null
+          ? List<String>.from(map['hasTypes'] as List<dynamic>)
+          : null,
+      also: map['also'] != null
+          ? List<String>.from(map['also'] as List<dynamic>)
+          : null,
+      derivation: map['derivation'] != null
+          ? List<String>.from(map['derivation'] as List<dynamic>)
+          : null,
+      examples: map['examples'] != null
+          ? List<String>.from(map['examples'] as List<dynamic>)
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ResultsModel.fromJson(String source) => ResultsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ResultsModel.fromJson(String source) =>
+      ResultsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class SyllablesModel extends Syllables {
@@ -108,7 +134,6 @@ class SyllablesModel extends Syllables {
   List<String>? list;
 
   SyllablesModel({this.count, this.list});
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -120,20 +145,22 @@ class SyllablesModel extends Syllables {
   factory SyllablesModel.fromMap(Map<String, dynamic> map) {
     return SyllablesModel(
       count: map['count'] != null ? map['count'] as int : null,
-      list: map['list'] != null ? List<String>.from((map['list'] as List<dynamic>)) : null,
+      list: map['list'] != null
+          ? List<String>.from((map['list'] as List<dynamic>))
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory SyllablesModel.fromJson(String source) => SyllablesModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SyllablesModel.fromJson(String source) =>
+      SyllablesModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class PronunciationModel extends Pronunciation {
   String? all;
 
   PronunciationModel({this.all});
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -149,5 +176,6 @@ class PronunciationModel extends Pronunciation {
 
   String toJson() => json.encode(toMap());
 
-  factory PronunciationModel.fromJson(String source) => PronunciationModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PronunciationModel.fromJson(String source) =>
+      PronunciationModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

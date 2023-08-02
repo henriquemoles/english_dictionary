@@ -13,8 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        WordDetailPage.routeName: (context) =>
-        const WordDetailPage(),
+        WordDetailPage.routeName: (context) => const WordDetailPage(),
       },
       darkTheme: ThemeData.dark(),
       title: 'english dictionary',
