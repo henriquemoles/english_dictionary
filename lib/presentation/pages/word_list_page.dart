@@ -46,68 +46,60 @@ class _WordListPageState extends State<WordListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 96,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Word List'),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: TextField(
-                  controller: wordListPageController.searchController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0),
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: 'Word',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.blue))),
-                  onChanged: (text) {
-                    wordListPageController.searchBook(text);
-                    setState(() {
-                      wordListPageController.finalListWords =
-                          wordListPageController.suggestion;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        centerTitle: true,
+        title: const Text('Word List'),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
-          itemCount: wordListPageController.finalListWords.length,
-          itemBuilder: (context, index) {
-            final words = wordListPageController.finalListWords[index];
-            return Card(
-              child: ListTile(
-                onTap: () async {
-                  // wordListPageController.makeRequest();
-                  await wordListPageController.call(words, context);
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: wordListPageController.searchController,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(0),
+                  prefixIcon: const Icon(Icons.search),
+                  hintText: 'Word',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(color: Colors.blue))),
+              onChanged: (text) {
+                wordListPageController.searchBook(text);
+                setState(() {
+                  wordListPageController.finalListWords =
+                      wordListPageController.suggestion;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemCount: wordListPageController.finalListWords.length,
+                itemBuilder: (context, index) {
+                  final words = wordListPageController.finalListWords[index];
+                  return Card(
+                    child: ListTile(
+                      onTap: () async {
+                        // wordListPageController.makeRequest();
+                        await wordListPageController.call(words, context);
+                      },
+                      title: Text(
+                        words,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  );
                 },
-                title: Text(
-                  words,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

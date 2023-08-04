@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HttpService {
@@ -51,7 +50,7 @@ class HttpService {
         throw Exception('Failed to cast response to type $T: $e');
       }
     } else {
-          return fromJson!(response.body);
+      return fromJson!(response.body);
     }
   }
 }
